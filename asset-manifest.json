@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/todoTareas/static/css/main.942c8596.css",
-    "main.js": "/todoTareas/static/js/main.33b4faf9.js",
-    "static/js/787.fa39388b.chunk.js": "/todoTareas/static/js/787.fa39388b.chunk.js",
-    "static/media/computadoras2_11zon.webp": "/todoTareas/static/media/computadoras2_11zon.828bc43b1620fc4532c5.webp",
-    "index.html": "/todoTareas/index.html",
-    "main.942c8596.css.map": "/todoTareas/static/css/main.942c8596.css.map",
-    "main.33b4faf9.js.map": "/todoTareas/static/js/main.33b4faf9.js.map",
-    "787.fa39388b.chunk.js.map": "/todoTareas/static/js/787.fa39388b.chunk.js.map"
+    "main.css": "/test1maikel/static/css/main.942c8596.css",
+    "main.js": "/test1maikel/static/js/main.30c52efe.js",
+    "static/js/787.fa39388b.chunk.js": "/test1maikel/static/js/787.fa39388b.chunk.js",
+    "static/media/computadoras2_11zon.webp": "/test1maikel/static/media/computadoras2_11zon.828bc43b1620fc4532c5.webp",
+    "index.html": "/test1maikel/index.html",
+    "main.942c8596.css.map": "/test1maikel/static/css/main.942c8596.css.map",
+    "main.30c52efe.js.map": "/test1maikel/static/js/main.30c52efe.js.map",
+    "787.fa39388b.chunk.js.map": "/test1maikel/static/js/787.fa39388b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.942c8596.css",
-    "static/js/main.33b4faf9.js"
+    "static/js/main.30c52efe.js"
   ]
 }
