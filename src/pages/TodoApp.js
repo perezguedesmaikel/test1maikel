@@ -1,6 +1,6 @@
 import { useState } from "react";
 import uuid from "react-uuid";
-import Todo from "./Todo";
+import Todo from "../components/Todo";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
