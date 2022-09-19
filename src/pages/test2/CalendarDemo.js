@@ -28,15 +28,18 @@ export const CalendarDemo = () => {
     }
   }
   function handleClick() {
-    const extraHoursWork = endWork - startWork - 8;
-    const basicPay = hourlyRate * 8;
-    const extraPay = extraHoursWork * hourlyRate * overTimeMultiplier;
-    const totalPay = extraPay + basicPay;
+    const arrayPay = [startWork, endWork, hourlyRate, overTimeMultiplier];
+    setPay(calculateTotalPay(arrayPay));
     setStartWork("");
     setEndWork("");
     setHourlyRate("");
     setOverTimeMultiplier("");
-    setPay(totalPay);
+  }
+  function calculateTotalPay(array) {
+    const extraHoursWork = array[1] - array[0] - 8;
+    const basicPay = array[2] * 8;
+    const extraPay = extraHoursWork * array[2] * array[3];
+    return extraPay + basicPay;
   }
 
   return (

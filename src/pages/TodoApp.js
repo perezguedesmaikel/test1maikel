@@ -8,18 +8,46 @@ import TextField from "@mui/material/TextField";
 export default function TodoApp() {
   const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([]);
-  const TrueAlphabetic = (phrase) => {
+
+  const TrueAlphabetic = (phrase, variante) => {
     const phraseLowercase = phrase.toLowerCase();
     const stringArray = phraseLowercase.split("");
     stringArray.sort();
-    return stringArray.join("");
+    //Implementing new variant
+    const stringArrayWord = phraseLowercase.split(" ");
+    const totalWord = stringArrayWord.length;
+    let i;
+    let numWord = [];
+    for (i = 0; i < totalWord; i++) {
+      numWord.push(stringArrayWord[i].length);
+    }
+    let stringOrganized = stringArray.join("").trim();
+    let newWord = [];
+    for (i = 0; i < totalWord; i++) {
+      newWord.push(stringOrganized.slice(0, numWord[i]));
+      stringOrganized = stringOrganized.replace(newWord[i], "");
+      console.log(newWord, "newWord");
+    }
+    let stringFinalTemp = "";
+    for (i = 0; i < totalWord; i++) {
+      const stringFinal = newWord[i];
+      stringFinalTemp = stringFinalTemp + " " + stringFinal;
+      console.log(stringFinalTemp);
+    }
+    //return
+    if (variante === false) {
+      return stringArray.join("").trim();
+    } else {
+      return stringFinalTemp;
+    }
   };
   function handleSubmit(e) {
     e.preventDefault();
     const newTodo = {
       id: uuid(),
+      stringFinalTemp: TrueAlphabetic(title, true),
       title,
-      stringOrder: TrueAlphabetic(title),
+      stringOrder: TrueAlphabetic(title, false),
       completed: false,
     };
     setTodos([newTodo, ...todos]);

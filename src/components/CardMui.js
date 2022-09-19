@@ -42,6 +42,10 @@ export default function CardMui({ item, onDelete, setIsEdit }) {
           <span className="text-info">In alphabetical order:</span>
           {item.stringOrder}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <span className="text-info">Other exercise:</span>
+          {item.stringFinalTemp}
+        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
