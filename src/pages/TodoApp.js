@@ -26,13 +26,11 @@ export default function TodoApp() {
     for (i = 0; i < totalWord; i++) {
       newWord.push(stringOrganized.slice(0, numWord[i]));
       stringOrganized = stringOrganized.replace(newWord[i], "");
-      console.log(newWord, "newWord");
     }
     let stringFinalTemp = "";
     for (i = 0; i < totalWord; i++) {
       const stringFinal = newWord[i];
       stringFinalTemp = stringFinalTemp + " " + stringFinal;
-      console.log(stringFinalTemp);
     }
     //return
     if (variante === false) {
