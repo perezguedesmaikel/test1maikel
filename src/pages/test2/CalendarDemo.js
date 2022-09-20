@@ -4,12 +4,14 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import InputTimer from "./InputTimer";
 
-export const CalendarDemo = () => {
+export const CalendarDemo = ({ mod24 }) => {
   const [pay, setPay] = useState(null);
   const [startWork, setStartWork] = useState("");
   const [endWork, setEndWork] = useState("");
   const [hourlyRate, setHourlyRate] = useState("");
   const [overTimeMultiplier, setOverTimeMultiplier] = useState("");
+  //case 12 hours
+
   function handleChange(e) {
     switch (e.target.name) {
       case "startWork":
@@ -45,16 +47,18 @@ export const CalendarDemo = () => {
 
   return (
     <>
-      <div className="d-flex flex-wrap justify-content-center">
+      <div
+        className={`d-flex flex-wrap justify-content-center ${
+          mod24 ? "d-none" : ""
+        }`}
+      >
         <label className="mt-3 mx-3">start:</label>
-        <InputTimer />
+        <InputTimer passValueTimer={passValueTimer} />
         <label className="mt-3 mx-3"> end:</label>
-        <InputTimer />
+        <InputTimer passValueTimer={passValueTimer} />
         <TextField
           className="m-1"
           name={"overTimeMultiplier2"}
-          value={overTimeMultiplier}
-          onChange={handleChange}
           label="Overtime multiplier"
           variant="outlined"
         />
@@ -62,15 +66,27 @@ export const CalendarDemo = () => {
           className="m-1"
           label="Hourly rate"
           variant="outlined"
-          value={hourlyRate}
           name={"hourlyRate2"}
-          onChange={handleChange}
         />
-        <Button variant="contained" size="large" onClick={handleClick}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={handleClick}
+          color="secondary"
+        >
           Calculate
         </Button>
       </div>
-      <div className="d-flex justify-content-center container">
+      <label
+        className={`colorVioleta fs-6 text-start ${mod24 ? "d-none" : ""}`}
+      >
+        The pay is: <span className="text-success">{pay ? pay : ""}</span>
+      </label>
+      <div
+        className={`d-flex justify-content-center container ${
+          mod24 ? "" : "d-none"
+        }`}
+      >
         <Box
           component="form"
           sx={{

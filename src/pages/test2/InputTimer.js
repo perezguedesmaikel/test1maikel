@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Calendar } from "primereact/calendar";
 
-export default function InputTimer() {
+export default function InputTimer({ passValueTimer }) {
   let today = new Date();
   let month = today.getMonth();
   let year = today.getFullYear();
@@ -18,6 +18,10 @@ export default function InputTimer() {
   let maxDate = new Date();
   maxDate.setMonth(nextMonth);
   maxDate.setFullYear(nextYear);
+  function handleChange(e) {
+    setDate8(e.value);
+    passValueTimer(e.value);
+  }
 
   return (
     <div>
@@ -26,9 +30,10 @@ export default function InputTimer() {
           <Calendar
             id="time12"
             value={date8}
-            onChange={(e) => setDate8(e.value)}
+            onChange={handleChange}
             timeOnly
             hourFormat="12"
+            showButtonBar={true}
           />
         </div>
       </div>
