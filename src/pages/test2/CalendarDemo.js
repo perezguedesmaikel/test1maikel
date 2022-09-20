@@ -107,6 +107,7 @@ export const CalendarDemo = ({ mod24 }) => {
           name={"date2"}
         />
         <TextField
+          type="number"
           onChange={handleChangeInputTimer}
           className="m-1"
           value={overTimeMultiplier2}
@@ -115,6 +116,7 @@ export const CalendarDemo = ({ mod24 }) => {
           variant="outlined"
         />
         <TextField
+          type="number"
           onChange={handleChangeInputTimer}
           value={hourlyRate2}
           className="m-1"
@@ -150,6 +152,7 @@ export const CalendarDemo = ({ mod24 }) => {
           autoComplete="off"
         >
           <TextField
+            type="number"
             name={"startWork"}
             label="Start of working day"
             value={startWork}
@@ -158,6 +161,7 @@ export const CalendarDemo = ({ mod24 }) => {
             fullWidth={true}
           />
           <TextField
+            type="number"
             value={endWork}
             name={"endWork"}
             onChange={handleChange}
@@ -166,6 +170,7 @@ export const CalendarDemo = ({ mod24 }) => {
             fullWidth={true}
           />
           <TextField
+            type="number"
             label="Hourly rate"
             variant="outlined"
             fullWidth={true}
@@ -174,6 +179,7 @@ export const CalendarDemo = ({ mod24 }) => {
             onChange={handleChange}
           />
           <TextField
+            type="number"
             name={"overTimeMultiplier"}
             value={overTimeMultiplier}
             onChange={handleChange}
