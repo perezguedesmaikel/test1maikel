@@ -11,7 +11,12 @@ export const CalendarDemo = ({ mod24 }) => {
   const [hourlyRate, setHourlyRate] = useState("");
   const [overTimeMultiplier, setOverTimeMultiplier] = useState("");
   //case 12 hours
-
+  const [date, setDate] = useState(null);
+  const [date2, setDate2] = useState(null);
+  const [result, setResult] = useState(null);
+  const [result2, setResult2] = useState(null);
+  const [hourlyRate2, setHourlyRate2] = useState("");
+  const [overTimeMultiplier2, setOverTimeMultiplier2] = useState("");
   function handleChange(e) {
     switch (e.target.name) {
       case "startWork":
@@ -44,6 +49,43 @@ export const CalendarDemo = ({ mod24 }) => {
     const extraPay = extraHoursWork * array[2] * array[3];
     return extraPay + basicPay;
   }
+  function handleChangeTimer(e) {
+    const time = e.value.toString().trim();
+    const timeReal = time.slice(16, 21);
+    const horas = timeReal.slice(0, 2);
+    const minutes = timeReal.slice(3);
+    const decimal = (parseInt(minutes) * 100) / 60;
+    const decimalRounded = Math.round(decimal);
+    const resultTemp = horas + "." + decimalRounded;
+    switch (e.target.name) {
+      case "date":
+        setDate(e.value);
+        setResult(resultTemp);
+        break;
+      case "date2":
+        setDate2(e.value);
+        setResult2(resultTemp);
+        break;
+      default:
+        console.log("default");
+    }
+  }
+  function handleChangeInputTimer(e) {
+    switch (e.target.name) {
+      case "overTimeMultiplier2":
+        setOverTimeMultiplier2(e.target.value);
+        break;
+      case "hourlyRate2":
+        setHourlyRate2(e.target.value);
+        break;
+      default:
+        console.log("default");
+    }
+  }
+  function handleClick2() {
+    const arrayPay = [result, result2, overTimeMultiplier2, hourlyRate2];
+    setPay(calculateTotalPay(arrayPay));
+  }
 
   return (
     <>
@@ -53,16 +95,28 @@ export const CalendarDemo = ({ mod24 }) => {
         }`}
       >
         <label className="mt-3 mx-3">start:</label>
-        <InputTimer passValueTimer={passValueTimer} />
+        <InputTimer
+          handleChange={handleChangeTimer}
+          date={date}
+          name={"date"}
+        />
         <label className="mt-3 mx-3"> end:</label>
-        <InputTimer passValueTimer={passValueTimer} />
+        <InputTimer
+          handleChange={handleChangeTimer}
+          date={date2}
+          name={"date2"}
+        />
         <TextField
+          onChange={handleChangeInputTimer}
           className="m-1"
+          value={overTimeMultiplier2}
           name={"overTimeMultiplier2"}
           label="Overtime multiplier"
           variant="outlined"
         />
         <TextField
+          onChange={handleChangeInputTimer}
+          value={hourlyRate2}
           className="m-1"
           label="Hourly rate"
           variant="outlined"
@@ -71,7 +125,7 @@ export const CalendarDemo = ({ mod24 }) => {
         <Button
           variant="contained"
           size="large"
-          onClick={handleClick}
+          onClick={handleClick2}
           color="secondary"
         >
           Calculate
