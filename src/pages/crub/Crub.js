@@ -414,8 +414,8 @@ export default function Crub() {
             exportable={false}
           ></Column>
           <Column
-            field="code"
-            header="Code"
+            field="id"
+            header="id"
             sortable
             style={{ minWidth: "12rem" }}
           ></Column>
@@ -424,11 +424,6 @@ export default function Crub() {
             header="Name"
             sortable
             style={{ minWidth: "16rem" }}
-          ></Column>
-          <Column
-            field="image"
-            header="Image"
-            body={imageBodyTemplate}
           ></Column>
           <Column
             field="price"
