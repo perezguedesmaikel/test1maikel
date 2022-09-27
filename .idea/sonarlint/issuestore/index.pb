@@ -28,8 +28,15 @@ J
 package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
 A
 package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
-H
-src/components/NavBar.js,b\6\b6edac4d9c50fdac07a1123228e640195c65cb60
-:
-
-src/App.js,1\e\1e43fa63aecd2127be034b3fb9d4caa172275714
+F
+src/components/Todo.js,2\7\27d77352e96e9bc95382e6b515d1b44828c62cc1
+M
+src/components/TodoElement.js,c\1\c1aaf505280420f6e2b63c0d4d7c5b82b340438e
+I
+src/components/CardMui.js,c\d\cdb5eaa6565418974af24d27ab2d4804669f051b
+D
+src/pages/TodoApp.js,2\7\277c08143412a6aa2ca4090b47f90c0330a6a726
+<
+src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d
+;
+src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d

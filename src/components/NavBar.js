@@ -17,6 +17,9 @@ export default function NavBar() {
           <Button variant="contained" onClick={() => navigate("/test2")}>
             Test2
           </Button>
+          <Button variant="contained" onClick={() => navigate("/test3")}>
+            Test3
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
