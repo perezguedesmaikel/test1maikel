@@ -18,6 +18,7 @@ import { Data } from "./data";
 export default function Crub() {
   let emptyProduct = {
     id: null,
+    projectId: "",
     name: "",
     image: null,
     description: "",
@@ -420,37 +421,29 @@ export default function Crub() {
             style={{ minWidth: "2rem" }}
           ></Column>
           <Column
-            field="name"
-            header="Name"
+            field="projectId"
+            header="P.id"
             sortable
-            style={{ minWidth: "16rem" }}
+            style={{ minWidth: "2rem" }}
           ></Column>
           <Column
-            field="price"
-            header="Price"
-            body={priceBodyTemplate}
+            field="name"
+            header="User"
             sortable
             style={{ minWidth: "8rem" }}
           ></Column>
           <Column
-            field="category"
-            header="Category"
+            field="description"
+            header="Description"
             sortable
             style={{ minWidth: "10rem" }}
           ></Column>
           <Column
-            field="rating"
-            header="Reviews"
-            body={ratingBodyTemplate}
-            sortable
-            style={{ minWidth: "12rem" }}
-          ></Column>
-          <Column
             field="inventoryStatus"
-            header="Status"
+            header="Creation Date"
             body={statusBodyTemplate}
             sortable
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "3rem" }}
           ></Column>
           <Column
             body={actionBodyTemplate}
@@ -481,7 +474,7 @@ export default function Crub() {
           />
         )}
         <div className="field">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">User</label>
           <InputText
             id="name"
             value={product.name}
@@ -494,6 +487,23 @@ export default function Crub() {
             <small className="p-error">Name is required.</small>
           )}
         </div>
+
+        <div className="field">
+          <label htmlFor="name">ProjectId</label>
+          <InputText
+            id="name"
+            type="number"
+            value={product.projectId}
+            onChange={(e) => onInputChange(e, "projectId")}
+            required
+            autoFocus
+            className={classNames({ "p-invalid": submitted && !product.name })}
+          />
+          {submitted && !product.name && (
+            <small className="p-error">Name is required.</small>
+          )}
+        </div>
+
         <div className="field">
           <label htmlFor="description">Description</label>
           <InputTextarea
