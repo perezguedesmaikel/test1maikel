@@ -417,7 +417,7 @@ export default function Crub() {
             field="id"
             header="id"
             sortable
-            style={{ minWidth: "12rem" }}
+            style={{ minWidth: "2rem" }}
           ></Column>
           <Column
             field="name"
