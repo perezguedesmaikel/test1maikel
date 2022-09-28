@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { classNames } from "primereact/utils";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -8,8 +8,6 @@ import { FileUpload } from "primereact/fileupload";
 import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { RadioButton } from "primereact/radiobutton";
-import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import "./DataTableDemo.css";
@@ -20,13 +18,8 @@ export default function Crub() {
     id: null,
     projectId: "",
     name: "",
-    image: null,
     description: "",
-    category: null,
-    price: 0,
-    quantity: 0,
-    rating: 0,
-    inventoryStatus: "INSTOCK",
+    creationDate: "",
   };
   const { data } = Data;
   const [products, setProducts] = useState(null);
@@ -88,7 +81,6 @@ export default function Crub() {
         });
       } else {
         _product.id = createId();
-        _product.image = "product-placeholder.svg";
         _products.push(_product);
         toast.current.show({
           severity: "success",
@@ -97,7 +89,9 @@ export default function Crub() {
           life: 3000,
         });
       }
-
+      const date = new Date();
+      _product.creationDate =
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
@@ -294,12 +288,10 @@ export default function Crub() {
     return <Rating value={rowData.rating} readOnly cancel={false} />;
   };
 
-  const statusBodyTemplate = (rowData) => {
+  const creationDateBodyTemplate = (rowData) => {
     return (
-      <span
-        className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}
-      >
-        {rowData.inventoryStatus}
+      <span className={`product-badge status-${rowData.creationDate}`}>
+        {rowData.creationDate}
       </span>
     );
   };
@@ -323,7 +315,7 @@ export default function Crub() {
 
   const header = (
     <div className="table-header">
-      <h5 className="mx-0 my-1">Manage Products</h5>
+      <h5 className="mx-0 my-1">Dashboard of all bugs</h5>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -441,7 +433,7 @@ export default function Crub() {
           <Column
             field="inventoryStatus"
             header="Creation Date"
-            body={statusBodyTemplate}
+            body={creationDateBodyTemplate}
             sortable
             style={{ minWidth: "3rem" }}
           ></Column>
@@ -462,17 +454,6 @@ export default function Crub() {
         footer={productDialogFooter}
         onHide={hideDialog}
       >
-        {product.image && (
-          <img
-            src={`images/product/${product.image}`}
-            onError={(e) =>
-              (e.target.src =
-                "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-            }
-            alt={product.image}
-            className="product-image block m-auto pb-3"
-          />
-        )}
         <div className="field">
           <label htmlFor="name">User</label>
           <InputText
@@ -514,75 +495,6 @@ export default function Crub() {
             rows={3}
             cols={20}
           />
-        </div>
-
-        <div className="field">
-          <label className="mb-3">Category</label>
-          <div className="formgrid grid">
-            <div className="field-radiobutton col-6">
-              <RadioButton
-                inputId="category1"
-                name="category"
-                value="Accessories"
-                onChange={onCategoryChange}
-                checked={product.category === "Accessories"}
-              />
-              <label htmlFor="category1">Accessories</label>
-            </div>
-            <div className="field-radiobutton col-6">
-              <RadioButton
-                inputId="category2"
-                name="category"
-                value="Clothing"
-                onChange={onCategoryChange}
-                checked={product.category === "Clothing"}
-              />
-              <label htmlFor="category2">Clothing</label>
-            </div>
-            <div className="field-radiobutton col-6">
-              <RadioButton
-                inputId="category3"
-                name="category"
-                value="Electronics"
-                onChange={onCategoryChange}
-                checked={product.category === "Electronics"}
-              />
-              <label htmlFor="category3">Electronics</label>
-            </div>
-            <div className="field-radiobutton col-6">
-              <RadioButton
-                inputId="category4"
-                name="category"
-                value="Fitness"
-                onChange={onCategoryChange}
-                checked={product.category === "Fitness"}
-              />
-              <label htmlFor="category4">Fitness</label>
-            </div>
-          </div>
-        </div>
-
-        <div className="formgrid grid">
-          <div className="field col">
-            <label htmlFor="price">Price</label>
-            <InputNumber
-              id="price"
-              value={product.price}
-              onValueChange={(e) => onInputNumberChange(e, "price")}
-              mode="currency"
-              currency="USD"
-              locale="en-US"
-            />
-          </div>
-          <div className="field col">
-            <label htmlFor="quantity">Quantity</label>
-            <InputNumber
-              id="quantity"
-              value={product.quantity}
-              onValueChange={(e) => onInputNumberChange(e, "quantity")}
-              integeronly
-            />
-          </div>
         </div>
       </Dialog>
 
