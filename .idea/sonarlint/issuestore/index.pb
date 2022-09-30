@@ -24,10 +24,6 @@ J
 src/components/FormEdit.js,1\2\12959b53cc8fca60deb12356d3d1558a2f57a208
 =
 src/index.css,c\5\c5d38a62d1faae90a2acaa34b79a7ef365c917e4
-<
-package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
-A
-package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
 F
 src/components/Todo.js,2\7\27d77352e96e9bc95382e6b515d1b44828c62cc1
 M
@@ -36,7 +32,5 @@ I
 src/components/CardMui.js,c\d\cdb5eaa6565418974af24d27ab2d4804669f051b
 D
 src/pages/TodoApp.js,2\7\277c08143412a6aa2ca4090b47f90c0330a6a726
-<
-src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d
 ;
 src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d

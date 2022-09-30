@@ -5,15 +5,23 @@ import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { FileUpload } from "primereact/fileupload";
-import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import "./DataTableDemo.css";
 import { Data } from "./data";
+import { Supabase } from "../../supabase/supabase";
 
 export default function Crub() {
+  useEffect(() => {
+    async function getData() {
+      const { data, error } = await Supabase.from("bug").select();
+      console.log(data);
+    }
+
+    getData();
+  }, []);
   let emptyProduct = {
     id: null,
     projectId: "",
@@ -21,7 +29,7 @@ export default function Crub() {
     description: "",
     creationDate: "",
   };
-  const { data } = Data;
+  const { data2 } = Data;
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -34,7 +42,7 @@ export default function Crub() {
   const dt = useRef(null);
 
   useEffect(() => {
-    setProducts(data);
+    setProducts(data2);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const formatCurrency = (value) => {
@@ -85,7 +93,7 @@ export default function Crub() {
         toast.current.show({
           severity: "success",
           summary: "Successful",
-          detail: "Product Created",
+          detail: "Bug Created",
           life: 3000,
         });
       }
@@ -201,22 +209,8 @@ export default function Crub() {
     });
   };
 
-  const onCategoryChange = (e) => {
-    let _product = { ...product };
-    _product["category"] = e.value;
-    setProduct(_product);
-  };
-
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
-    let _product = { ...product };
-    _product[`${name}`] = val;
-
-    setProduct(_product);
-  };
-
-  const onInputNumberChange = (e, name) => {
-    const val = e.value || 0;
     let _product = { ...product };
     _product[`${name}`] = val;
 
@@ -264,28 +258,6 @@ export default function Crub() {
         />
       </React.Fragment>
     );
-  };
-
-  const imageBodyTemplate = (rowData) => {
-    return (
-      <img
-        src={`images/product/${rowData.image}`}
-        onError={(e) =>
-          (e.target.src =
-            "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
-        }
-        alt={rowData.image}
-        className="product-image"
-      />
-    );
-  };
-
-  const priceBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.price);
-  };
-
-  const ratingBodyTemplate = (rowData) => {
-    return <Rating value={rowData.rating} readOnly cancel={false} />;
   };
 
   const creationDateBodyTemplate = (rowData) => {
@@ -396,7 +368,7 @@ export default function Crub() {
           rows={10}
           rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} bugs"
           globalFilter={globalFilter}
           header={header}
           responsiveLayout="scroll"
@@ -428,7 +400,7 @@ export default function Crub() {
             field="description"
             header="Description"
             sortable
-            style={{ minWidth: "10rem" }}
+            style={{ minWidth: "25rem" }}
           ></Column>
           <Column
             field="inventoryStatus"
@@ -440,7 +412,7 @@ export default function Crub() {
           <Column
             body={actionBodyTemplate}
             exportable={false}
-            style={{ minWidth: "8rem" }}
+            style={{ minWidth: "4rem" }}
           ></Column>
         </DataTable>
       </div>
@@ -448,7 +420,7 @@ export default function Crub() {
       <Dialog
         visible={productDialog}
         style={{ width: "450px" }}
-        header="Product Details"
+        header="Bug Details"
         modal
         className="p-fluid"
         footer={productDialogFooter}
