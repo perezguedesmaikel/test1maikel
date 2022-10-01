@@ -12,14 +12,6 @@ import "./DataTableDemo.css";
 import { Supabase } from "../../supabase/supabase";
 
 export default function Crub() {
-  useEffect(() => {
-    async function getData() {
-      const { data, error } = await Supabase.from("bug").select();
-      setProducts(data);
-    }
-
-    getData();
-  }, []);
   let emptyProduct = {
     id: null,
     projectId: "",
@@ -37,6 +29,14 @@ export default function Crub() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const toast = useRef(null);
   const dt = useRef(null);
+  useEffect(() => {
+    async function getData() {
+      const { data, error } = await Supabase.from("bug").select();
+      setProducts(data);
+    }
+
+    getData();
+  }, [products]);
 
   const openNew = () => {
     setProduct(emptyProduct);
@@ -83,9 +83,6 @@ export default function Crub() {
           life: 3000,
         });
       }
-      const date = new Date();
-      _product.creationDate =
-        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
@@ -115,17 +112,17 @@ export default function Crub() {
     setDeleteProductDialog(true);
   };
 
-  const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-    setProducts(_products);
+  const deleteProduct = async () => {
     setDeleteProductDialog(false);
-    setProduct(emptyProduct);
     toast.current.show({
       severity: "success",
       summary: "Successful",
       detail: "Product Deleted",
       life: 3000,
     });
+    const { data, error } = await Supabase.from("bug")
+      .delete()
+      .match({ id: product.id });
   };
 
   const findIndexById = (id) => {
