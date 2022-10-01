@@ -4,20 +4,18 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import "./DataTableDemo.css";
-import { Data } from "./data";
 import { Supabase } from "../../supabase/supabase";
 
 export default function Crub() {
   useEffect(() => {
     async function getData() {
       const { data, error } = await Supabase.from("bug").select();
-      console.log(data);
+      setProducts(data);
     }
 
     getData();
@@ -29,7 +27,6 @@ export default function Crub() {
     description: "",
     creationDate: "",
   };
-  const { data2 } = Data;
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -40,17 +37,6 @@ export default function Crub() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const toast = useRef(null);
   const dt = useRef(null);
-
-  useEffect(() => {
-    setProducts(data2);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const formatCurrency = (value) => {
-    return value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
 
   const openNew = () => {
     setProduct(emptyProduct);
@@ -103,6 +89,19 @@ export default function Crub() {
       setProducts(_products);
       setProductDialog(false);
       setProduct(emptyProduct);
+
+      //to send the backend
+      async function insertData() {
+        const { data, error } = await Supabase.from("bug").insert([
+          {
+            name: _product.name,
+            description: _product.description,
+            projectId: _product.projectId,
+          },
+        ]);
+      }
+
+      insertData();
     }
   };
 
@@ -238,34 +237,13 @@ export default function Crub() {
   };
 
   const rightToolbarTemplate = () => {
-    return (
-      <React.Fragment>
-        <FileUpload
-          mode="basic"
-          name="demo[]"
-          auto
-          url="https://primefaces.org/primereact/showcase/upload.php"
-          accept=".csv"
-          chooseLabel="Import"
-          className="mr-2 inline-block"
-          onUpload={importCSV}
-        />
-        <Button
-          label="Export"
-          icon="pi pi-upload"
-          className="p-button-help"
-          onClick={exportCSV}
-        />
-      </React.Fragment>
-    );
+    return <React.Fragment></React.Fragment>;
   };
 
   const creationDateBodyTemplate = (rowData) => {
-    return (
-      <span className={`product-badge status-${rowData.creationDate}`}>
-        {rowData.creationDate}
-      </span>
-    );
+    const dateString = rowData.created_at.toString();
+    const dateStringSlice = dateString.slice(0, 10);
+    return <span>{dateStringSlice}</span>;
   };
 
   const actionBodyTemplate = (rowData) => {
@@ -403,9 +381,8 @@ export default function Crub() {
             style={{ minWidth: "25rem" }}
           ></Column>
           <Column
-            field="inventoryStatus"
+            field="dateCreate"
             header="Creation Date"
-            body={creationDateBodyTemplate}
             sortable
             style={{ minWidth: "3rem" }}
           ></Column>
@@ -437,7 +414,7 @@ export default function Crub() {
             className={classNames({ "p-invalid": submitted && !product.name })}
           />
           {submitted && !product.name && (
-            <small className="p-error">Name is required.</small>
+            <small className="p-error">User is required.</small>
           )}
         </div>
 
@@ -453,7 +430,7 @@ export default function Crub() {
             className={classNames({ "p-invalid": submitted && !product.name })}
           />
           {submitted && !product.name && (
-            <small className="p-error">Name is required.</small>
+            <small className="p-error">ProjectId is required.</small>
           )}
         </div>
 
