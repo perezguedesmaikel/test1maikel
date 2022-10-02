@@ -155,7 +155,6 @@ export default function Crub() {
   };
 
   const deleteSelectedProducts = () => {
-    console.log("probando si es este el tipo");
     let _products = products.filter((val) => !selectedProducts.includes(val));
     setProducts(_products);
     setDeleteProductsDialog(false);
@@ -273,7 +272,9 @@ export default function Crub() {
       <Toast ref={toast} />
 
       <div className="card">
-        <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
+        <Toolbar className="mb-4" left={leftToolbarTemplate}>
+          {" "}
+        </Toolbar>
 
         <DataTable
           ref={dt}
@@ -290,41 +291,48 @@ export default function Crub() {
           header={header}
           responsiveLayout="scroll"
         >
-          <Column
-            field="id"
-            header="id"
-            sortable
-            style={{ minWidth: "2rem" }}
-          ></Column>
+          <Column field="id" header="id" sortable style={{ minWidth: "2rem" }}>
+            {" "}
+          </Column>
           <Column
             field="projectId"
             header="P.id"
             sortable
             style={{ minWidth: "2rem" }}
-          ></Column>
+          >
+            {" "}
+          </Column>
           <Column
             field="name"
             header="User"
             sortable
             style={{ minWidth: "8rem" }}
-          ></Column>
+          >
+            {" "}
+          </Column>
           <Column
             field="description"
             header="Description"
             sortable
             style={{ minWidth: "25rem" }}
-          ></Column>
+          >
+            {" "}
+          </Column>
           <Column
             field="dateCreate"
             header="Creation Date"
             sortable
             style={{ minWidth: "3rem" }}
-          ></Column>
+          >
+            {" "}
+          </Column>
           <Column
             body={actionBodyTemplate}
             exportable={false}
             style={{ minWidth: "4rem" }}
-          ></Column>
+          >
+            {" "}
+          </Column>
         </DataTable>
       </div>
 
