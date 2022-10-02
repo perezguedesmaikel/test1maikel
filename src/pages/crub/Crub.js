@@ -38,7 +38,7 @@ export default function Crub() {
       }
     }
 
-    getData();
+    getData().then();
   }, [products]);
 
   const openNew = () => {
@@ -84,7 +84,6 @@ export default function Crub() {
           })
           .match({ id: product.id });
       } else {
-        _product.id = createId();
         _products.push(_product);
         toast.current.show({
           severity: "success",
@@ -92,7 +91,7 @@ export default function Crub() {
           detail: "Bug Created",
           life: 3000,
         });
-        insertData();
+        await insertData();
       }
       setProducts(_products);
       setProductDialog(false);
@@ -115,6 +114,10 @@ export default function Crub() {
     setProduct({ ...productTemp });
     setProductDialog(true);
   };
+
+  function filter(e) {
+    setGlobalFilter(e.target.value);
+  }
 
   const confirmDeleteProduct = (productDelete) => {
     setProduct(productDelete);
@@ -142,16 +145,6 @@ export default function Crub() {
     }
 
     return index;
-  };
-
-  const createId = () => {
-    let id = "";
-    let chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
   };
 
   const deleteSelectedProducts = () => {
@@ -210,11 +203,7 @@ export default function Crub() {
       <h5 className="mx-0 my-1">Dashboard of all bugs</h5>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
-        <InputText
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
-        />
+        <InputText type="search" onInput={filter} placeholder="Search..." />
       </span>
     </div>
   );
