@@ -57,7 +57,7 @@ export default function Crub() {
     setDeleteProductsDialog(false);
   };
 
-  const saveProduct = () => {
+  const saveProduct = async () => {
     setSubmitted(true);
 
     if (product.name.trim()) {
@@ -73,6 +73,13 @@ export default function Crub() {
           detail: "Product Updated",
           life: 3000,
         });
+        const { data, error } = await Supabase.from("bug")
+          .update({
+            name: _product.name,
+            projectId: _product.projectId,
+            description: _product.description,
+          })
+          .match({ id: product.id });
       } else {
         _product.id = createId();
         _products.push(_product);
@@ -82,6 +89,7 @@ export default function Crub() {
           detail: "Bug Created",
           life: 3000,
         });
+        insertData();
       }
       setProducts(_products);
       setProductDialog(false);
@@ -89,7 +97,7 @@ export default function Crub() {
 
       //to send the backend
       async function insertData() {
-        const { data, error } = await Supabase.from("bug").insert([
+        await Supabase.from("bug").insert([
           {
             name: _product.name,
             description: _product.description,
@@ -97,13 +105,11 @@ export default function Crub() {
           },
         ]);
       }
-
-      insertData();
     }
   };
 
-  const editProduct = (product) => {
-    setProduct({ ...product });
+  const editProduct = async (productTemp) => {
+    setProduct({ ...productTemp });
     setProductDialog(true);
   };
 
@@ -147,52 +153,8 @@ export default function Crub() {
     return id;
   };
 
-  const importCSV = (e) => {
-    const file = e.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const csv = e.target.result;
-      const data = csv.split("\n");
-
-      // Prepare DataTable
-      const cols = data[0].replace(/['"]+/g, "").split(",");
-      data.shift();
-
-      const importedData = data.map((d) => {
-        d = d.split(",");
-        const processedData = cols.reduce((obj, c, i) => {
-          c =
-            c === "Status"
-              ? "inventoryStatus"
-              : c === "Reviews"
-              ? "rating"
-              : c.toLowerCase();
-          obj[c] = d[i].replace(/['"]+/g, "");
-          (c === "price" || c === "rating") && (obj[c] = parseFloat(obj[c]));
-          return obj;
-        }, {});
-
-        processedData["id"] = createId();
-        return processedData;
-      });
-
-      const _products = [...products, ...importedData];
-
-      setProducts(_products);
-    };
-
-    reader.readAsText(file, "UTF-8");
-  };
-
-  const exportCSV = () => {
-    dt.current.exportCSV();
-  };
-
-  const confirmDeleteSelected = () => {
-    setDeleteProductsDialog(true);
-  };
-
   const deleteSelectedProducts = () => {
+    console.log("probando si es este el tipo");
     let _products = products.filter((val) => !selectedProducts.includes(val));
     setProducts(_products);
     setDeleteProductsDialog(false);
@@ -200,7 +162,7 @@ export default function Crub() {
     toast.current.show({
       severity: "success",
       summary: "Successful",
-      detail: "Products Deleted",
+      detail: "Bug Deleted",
       life: 3000,
     });
   };
@@ -222,25 +184,8 @@ export default function Crub() {
           className="p-button-success mr-2"
           onClick={openNew}
         />
-        <Button
-          label="Delete"
-          icon="pi pi-trash"
-          className="p-button-danger"
-          onClick={confirmDeleteSelected}
-          disabled={!selectedProducts || !selectedProducts.length}
-        />
       </React.Fragment>
     );
-  };
-
-  const rightToolbarTemplate = () => {
-    return <React.Fragment></React.Fragment>;
-  };
-
-  const creationDateBodyTemplate = (rowData) => {
-    const dateString = rowData.created_at.toString();
-    const dateStringSlice = dateString.slice(0, 10);
-    return <span>{dateStringSlice}</span>;
   };
 
   const actionBodyTemplate = (rowData) => {
@@ -327,11 +272,7 @@ export default function Crub() {
       <Toast ref={toast} />
 
       <div className="card">
-        <Toolbar
-          className="mb-4"
-          left={leftToolbarTemplate}
-          right={rightToolbarTemplate}
-        ></Toolbar>
+        <Toolbar className="mb-4" left={leftToolbarTemplate}></Toolbar>
 
         <DataTable
           ref={dt}
@@ -348,11 +289,6 @@ export default function Crub() {
           header={header}
           responsiveLayout="scroll"
         >
-          <Column
-            selectionMode="multiple"
-            headerStyle={{ width: "3rem" }}
-            exportable={false}
-          ></Column>
           <Column
             field="id"
             header="id"
