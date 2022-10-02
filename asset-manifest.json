@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/test1maikel/static/css/main.0af1e861.css",
-    "main.js": "/test1maikel/static/js/main.eb60ce9a.js",
+    "main.css": "/test1maikel/static/css/main.925d7247.css",
+    "main.js": "/test1maikel/static/js/main.bf4f4ebd.js",
+    "static/js/255.0da6859e.chunk.js": "/test1maikel/static/js/255.0da6859e.chunk.js",
     "static/js/787.fa39388b.chunk.js": "/test1maikel/static/js/787.fa39388b.chunk.js",
     "static/media/primeicons.svg": "/test1maikel/static/media/primeicons.c6e2053303524e39530c.svg",
     "static/media/computadoras2_11zon.webp": "/test1maikel/static/media/computadoras2_11zon.828bc43b1620fc4532c5.webp",
@@ -9,12 +10,13 @@
     "static/media/primeicons.woff": "/test1maikel/static/media/primeicons.449aa8c65cdc5c2a8686.woff",
     "static/media/primeicons.ttf": "/test1maikel/static/media/primeicons.91bacab1f083f2795272.ttf",
     "index.html": "/test1maikel/index.html",
-    "main.0af1e861.css.map": "/test1maikel/static/css/main.0af1e861.css.map",
-    "main.eb60ce9a.js.map": "/test1maikel/static/js/main.eb60ce9a.js.map",
+    "main.925d7247.css.map": "/test1maikel/static/css/main.925d7247.css.map",
+    "main.bf4f4ebd.js.map": "/test1maikel/static/js/main.bf4f4ebd.js.map",
+    "255.0da6859e.chunk.js.map": "/test1maikel/static/js/255.0da6859e.chunk.js.map",
     "787.fa39388b.chunk.js.map": "/test1maikel/static/js/787.fa39388b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0af1e861.css",
-    "static/js/main.eb60ce9a.js"
+    "static/css/main.925d7247.css",
+    "static/js/main.bf4f4ebd.js"
   ]
 }
