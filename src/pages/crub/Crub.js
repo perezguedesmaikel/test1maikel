@@ -33,6 +33,9 @@ export default function Crub() {
     async function getData() {
       const { data, error } = await Supabase.from("bug").select();
       setProducts(data);
+      if (error) {
+        console.log(error.message);
+      }
     }
 
     getData();
@@ -73,7 +76,7 @@ export default function Crub() {
           detail: "Product Updated",
           life: 3000,
         });
-        const { data, error } = await Supabase.from("bug")
+        await Supabase.from("bug")
           .update({
             name: _product.name,
             projectId: _product.projectId,
@@ -113,8 +116,8 @@ export default function Crub() {
     setProductDialog(true);
   };
 
-  const confirmDeleteProduct = (product) => {
-    setProduct(product);
+  const confirmDeleteProduct = (productDelete) => {
+    setProduct(productDelete);
     setDeleteProductDialog(true);
   };
 
@@ -126,9 +129,7 @@ export default function Crub() {
       detail: "Product Deleted",
       life: 3000,
     });
-    const { data, error } = await Supabase.from("bug")
-      .delete()
-      .match({ id: product.id });
+    await Supabase.from("bug").delete().match({ id: product.id });
   };
 
   const findIndexById = (id) => {
