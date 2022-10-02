@@ -10,8 +10,10 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import "./DataTableDemo.css";
 import { Supabase } from "../../supabase/supabase";
+import BasicSelect from "./BasicSelect";
 
 export default function Crub() {
+  const [dataSelect, setDataSelect] = useState(null);
   let emptyProduct = {
     id: null,
     projectId: "",
@@ -40,6 +42,17 @@ export default function Crub() {
 
     getData().then();
   }, [products]);
+  useEffect(() => {
+    async function getSelectData() {
+      const { data, error } = await Supabase.from("user").select();
+      setDataSelect(data);
+      if (error) {
+        console.log(error.message);
+      }
+    }
+
+    getSelectData().then();
+  }, []);
 
   const openNew = () => {
     setProduct(emptyProduct);
@@ -335,14 +348,10 @@ export default function Crub() {
         onHide={hideDialog}
       >
         <div className="field">
-          <label htmlFor="name">User</label>
-          <InputText
-            id="name"
-            value={product.name}
-            onChange={(e) => onInputChange(e, "name")}
-            required
-            autoFocus
-            className={classNames({ "p-invalid": submitted && !product.name })}
+          <BasicSelect
+            name={product.name}
+            onInputChange={onInputChange}
+            dataSelect={dataSelect}
           />
           {submitted && !product.name && (
             <small className="p-error">User is required.</small>
