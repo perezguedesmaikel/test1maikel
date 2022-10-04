@@ -143,7 +143,27 @@ export default function Crub() {
   };
 
   function filter(e) {
-    setGlobalFilter(e.target.value);
+    console.log(e.target.value);
+    console.log(products);
+    let resultadoBusqueda = products.filter((elemento) => {
+      if (
+        elemento.name
+          .toString()
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+        elemento.projectId
+          .toString()
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+        elemento.dateCreate
+          .toString()
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+      ) {
+        return elemento;
+      }
+    });
+    console.log(resultadoBusqueda);
   }
 
   const confirmDeleteProduct = (productDelete) => {
