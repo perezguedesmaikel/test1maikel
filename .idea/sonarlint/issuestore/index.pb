@@ -34,3 +34,7 @@ D
 src/pages/TodoApp.js,2\7\277c08143412a6aa2ca4090b47f90c0330a6a726
 ;
 src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d
+<
+package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
+A
+package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47

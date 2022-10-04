@@ -11,6 +11,7 @@ import { InputText } from "primereact/inputtext";
 import "./DataTableDemo.css";
 import { Supabase } from "../../supabase/supabase";
 import BasicSelect from "./BasicSelect";
+import ProjectSelect from "./ProjectSelect";
 
 export default function Crub() {
   const [dataSelect, setDataSelect] = useState(null);
@@ -369,6 +370,7 @@ export default function Crub() {
             autoFocus
             className={classNames({ "p-invalid": submitted && !product.name })}
           />
+          <ProjectSelect />
           {submitted && !product.name && (
             <small className="p-error">ProjectId is required.</small>
           )}
