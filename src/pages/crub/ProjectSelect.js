@@ -1,28 +1,11 @@
 import * as React from "react";
-import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Supabase } from "../../supabase/supabase";
 
-export default function ProjectSelect() {
-  const [projectSelect, setProjectSelect] = React.useState(null);
-  const [project, setProject] = React.useState("");
-
-  const handleChange = (event) => {
-    setProject(event.target.value);
-  };
-  useEffect(() => {
-    async function fetchProject() {
-      const { data, error } = await Supabase.from("project").select();
-      setProjectSelect(data);
-      error ? console.log(error) : console.log(data);
-    }
-
-    fetchProject().then();
-  }, []);
+export default function ProjectSelect({ name, onChange, projectSelect }) {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -30,12 +13,13 @@ export default function ProjectSelect() {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={project}
+          value={projectSelect?.id}
+          defaultValue={name}
           label="Project Select"
-          onChange={handleChange}
+          onChange={onChange}
         >
           {projectSelect?.map((item) => (
-            <MenuItem value={item.name} key={item.id}>
+            <MenuItem value={item.id} key={item.id}>
               {item.id + "-" + item.name}
             </MenuItem>
           ))}

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { classNames } from "primereact/utils";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
@@ -30,6 +29,7 @@ export default function Crub() {
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
+  const [projectSelect, setProjectSelect] = React.useState(null);
   const toast = useRef(null);
   const dt = useRef(null);
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function Crub() {
 
     getData().then();
   }, [products]);
+
   useEffect(() => {
     async function getSelectData() {
       const { data, error } = await Supabase.from("user").select();
@@ -53,6 +54,18 @@ export default function Crub() {
     }
 
     getSelectData().then();
+  }, []);
+
+  useEffect(() => {
+    async function fetchProject() {
+      const { data, error } = await Supabase.from("project").select();
+      setProjectSelect(data);
+      if (error) {
+        console.log(error);
+      }
+    }
+
+    fetchProject().then();
   }, []);
 
   const openNew = () => {
@@ -359,18 +372,12 @@ export default function Crub() {
           )}
         </div>
 
-        <div className="field">
-          <label htmlFor="name">ProjectId</label>
-          <InputText
-            id="name"
-            type="number"
-            value={product.projectId}
+        <div className="field mt-2">
+          <ProjectSelect
+            name={product.projectId}
             onChange={(e) => onInputChange(e, "projectId")}
-            required
-            autoFocus
-            className={classNames({ "p-invalid": submitted && !product.name })}
+            projectSelect={projectSelect}
           />
-          <ProjectSelect />
           {submitted && !product.name && (
             <small className="p-error">ProjectId is required.</small>
           )}
