@@ -21,6 +21,7 @@ export default function Crub() {
     description: "",
     creationDate: "",
   };
+  const [productsIni, setProductsIni] = useState(null);
   const [products, setProducts] = useState(null);
   const [productDialog, setProductDialog] = useState(false);
   const [deleteProductDialog, setDeleteProductDialog] = useState(false);
@@ -28,21 +29,21 @@ export default function Crub() {
   const [product, setProduct] = useState(emptyProduct);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState(null);
   const [projectSelect, setProjectSelect] = React.useState(null);
   const toast = useRef(null);
   const dt = useRef(null);
   useEffect(() => {
     async function getData() {
       const { data, error } = await Supabase.from("bug").select();
-      setProducts(data);
+      setProducts(data.sort());
+      setProductsIni(data.sort());
       if (error) {
         console.log(error.message);
       }
     }
 
     getData().then();
-  }, [products]);
+  }, []);
 
   useEffect(() => {
     async function getSelectData() {
@@ -111,6 +112,17 @@ export default function Crub() {
           })
           .match({ id: product.id });
       } else {
+        const date = new Date();
+        const numArray = parseInt(_products.length);
+        _product.dateCreate =
+          date.getFullYear() +
+          "-" +
+          parseInt(date.getMonth() + 1) +
+          "-" +
+          date.getDate();
+        console.log(_product.dateCreate);
+        console.log(_product);
+        _product.id = _products[numArray - 1].id + 1;
         _products.push(_product);
         toast.current.show({
           severity: "success",
@@ -145,7 +157,7 @@ export default function Crub() {
   function filter(e) {
     console.log(e.target.value);
     console.log(products);
-    let resultadoBusqueda = products.filter((elemento) => {
+    let resultadoBusqueda = productsIni.filter((elemento) => {
       if (
         elemento.name
           .toString()
@@ -163,7 +175,7 @@ export default function Crub() {
         return elemento;
       }
     });
-    console.log(resultadoBusqueda);
+    setProducts(resultadoBusqueda);
   }
 
   const confirmDeleteProduct = (productDelete) => {
@@ -172,6 +184,8 @@ export default function Crub() {
   };
 
   const deleteProduct = async () => {
+    let _products = products.filter((val) => val.id !== product.id);
+    setProducts(_products);
     setDeleteProductDialog(false);
     toast.current.show({
       severity: "success",
@@ -323,7 +337,6 @@ export default function Crub() {
           rowsPerPageOptions={[5, 10, 25]}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} bugs"
-          globalFilter={globalFilter}
           header={header}
           responsiveLayout="scroll"
         >
